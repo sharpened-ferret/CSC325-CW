@@ -1,9 +1,15 @@
 # Neil Woodhouse - 851182
 
+import random
+
 K_VAL = 2
 L_VAL = 8
 QUEEN_X = (K_VAL % 8) + 1
 QUEEN_Y = (L_VAL % 8) + 1
+
+ # Sets the characters for marking white and black queens
+BLACK_QUEEN = '♛'
+WHITE_QUEEN = '♕'
 
 def main():
     print("Problem Started, Fixed Queen Position = ({}, {})\n".format(QUEEN_X, QUEEN_Y))
@@ -20,9 +26,23 @@ def main():
         ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢']
     ]
 
-    # Marks the position of the fixed piece with a black queen.
-    # Other queens will be white pieces to distinguish.
-    board[QUEEN_Y - 1][QUEEN_X - 1] = '♛'
+    # Marks the position of the fixed piece with a black queen
+    board[QUEEN_Y - 1][QUEEN_X - 1] = BLACK_QUEEN
+
+    # Randomly assigns the other 7 queens, marked with white queens
+    unassigned_queens = 7
+    while unassigned_queens > 0:
+        rand_x = random.randint(0, 7)
+        rand_y = random.randint(0, 7)
+
+        curr_pos = board[rand_y][rand_x]
+        if curr_pos != BLACK_QUEEN or curr_pos != WHITE_QUEEN:
+            board[rand_y][rand_x] = WHITE_QUEEN
+            unassigned_queens -= 1
+    print_board(board)
+    
+
+def print_board(board):
     for row in board:
         print(''.join(row))
 
