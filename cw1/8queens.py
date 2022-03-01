@@ -6,7 +6,7 @@ QUEEN_X = (K_VAL % 8) + 1
 QUEEN_Y = (L_VAL % 8) + 1
 
 def main():
-    print("Problem Started, Queen Pos = ({}, {})".format(QUEEN_X, QUEEN_Y))
+    print("Problem Started, Fixed Queen Position = ({}, {})\n".format(QUEEN_X, QUEEN_Y))
 
 if __name__ == "__main__":
     main()
