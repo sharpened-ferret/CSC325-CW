@@ -46,28 +46,30 @@ def print_board(board):
     for row in board:
         print(''.join(row))
 
-class Solution:
-    queen_positions = []
+class Node:
+    def Node(self, parent, board):
+        self.parent = parent
+        self.children = []
+        self.board = board
 
-    def Solution(self):
-        self.queen_positions
+        self.g = self.parent.g + 1
+        self.h = self.safe_queens()
+        self.f = self.g + self.h
+
+     # The number of queens in safe positions is used as a success heuristic
+    def safe_queens():
+        # TODO calculate number of safe queens
+        return 0
     
+     # Checks if a solution has been found (if all queens are safe)
     def is_solved(self):
-        if len(self.queen_positions) == 8:
+        if self.h == 8:
             return True
         return False
-    
-    # Equality method: returns true if both Solution objects have the same number of queen positions stored, 
-    # and have the same queen positions stored (regardless of list order)
-    def __eq__(self, other):
-        num_equal = 0
-        if (len(self.queen_positions) == len(other.queen_positions)):
-            for pos in other.queen_positions:
-                if self.queen_positions in self.queen_positions:
-                    num_equal += 1
-            if num_equal == len(self.queen_positions):
-                return True
-        return False
+
+    def gen_children(self):
+         # TODO Check for all safe positions that children can be placed in
+        return
 
 
 
