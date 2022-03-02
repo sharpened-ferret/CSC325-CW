@@ -32,19 +32,16 @@ def main():
     # Randomly assigns the other 7 queens, marked with white queens
     starting_positions = []
     unassigned_queens = 7
-    while unassigned_queens > 0:
-        rand_x = random.randint(0, 7)
-        rand_y = random.randint(0, 7)
-
-        curr_pos = board[rand_y][rand_x]
-        if curr_pos != BLACK_QUEEN or curr_pos != WHITE_QUEEN:
-            board[rand_y][rand_x] = WHITE_QUEEN
-            starting_positions.append((rand_x, rand_y))
+    for x in range(0, 8):
+        if (x+1 != QUEEN_X):
+            rand_y = random.randint(0, 7)
+            board[rand_y][x] = WHITE_QUEEN
+            starting_positions.append((x, rand_y))
             unassigned_queens -= 1
     print_board(board)
-    print(starting_positions)
+    print("Starting Positions (0-7 coords):" + str(starting_positions))
 
-    print(astar(starting_positions))
+    # print(astar(starting_positions))
 
 def astar(queen_positions):
     starting_node = Node(None, queen_positions)
