@@ -1,11 +1,14 @@
 # Neil Woodhouse - 851182
 
 import random
+from tracemalloc import start
 
 K_VAL = 2
 L_VAL = 8
 QUEEN_X = (K_VAL % 8) + 1
 QUEEN_Y = (L_VAL % 8) + 1
+
+FIXED_QUEEN_ARR_POS = (QUEEN_X-1, QUEEN_Y-1)
 
  # Sets the characters for marking white and black queens
 BLACK_QUEEN = '♛'
@@ -40,6 +43,9 @@ def main():
             unassigned_queens -= 1
     print_board(board)
     print("Starting Positions (0-7 coords):" + str(starting_positions))
+    
+    test_node = Node(None, starting_positions)
+    print(test_node.safe_queens())
 
     # print(astar(starting_positions))
 
@@ -72,11 +78,16 @@ def astar(queen_positions):
     
 
 def print_board(board):
-    for row in board:
+    output_board = board.copy()
+    output_board.reverse()
+    for row in output_board:
         print(''.join(row))
 
 def safe_queen_sort(node):
     return node.h
+
+def print_tuple(tuple_pos):
+    return "({}, {})".format(tuple_pos[0] + 1, tuple_pos[1] + 1)
 
 class Node:
     def __init__(self, parent, queen_positions):
@@ -84,9 +95,9 @@ class Node:
         self.children = []
         self.queen_positions = queen_positions
 
-        self.g = self.parent.g + 1
-        self.h = self.safe_queens()
-        self.f = self.g + self.h
+        # self.g = self.parent.g + 1
+        # self.h = self.safe_queens()
+        # self.f = self.g + self.h
 
     def __str__(self):
         return "parent=[{}], fixed queen={}, queens={}".format(self.parent, (QUEEN_X, QUEEN_Y), self.queen_positions)
@@ -105,9 +116,36 @@ class Node:
         return False
 
      # The number of queens in safe positions is used as a success heuristic
-    def safe_queens():
+    def safe_queens(self):
         # TODO calculate number of safe queens
-        return 0
+        safe_queen_num = 8
+        combined_queens = self.queen_positions.copy()
+        combined_queens.append(FIXED_QUEEN_ARR_POS)
+        for queen in combined_queens:
+            is_safe = True
+            other_queens = combined_queens.copy()
+            other_queens.remove(queen)
+            for other in other_queens:
+                 # Checks if another queen exists in the same row or col
+                if queen[0] == other[0] or queen[1] == other[1]:
+                    is_safe = False
+                    break
+            for i in range(-7, 7):
+                 # Checks diagonal directions through the board
+                coord = (queen[0]+i, queen[1]+i)
+                if coord in other_queens:
+                    is_safe = False
+                    break
+                coord = (queen[0]+i, queen[1]-i)
+                if coord in other_queens:
+                    is_safe = False
+                    break
+            if not is_safe:
+                print("Queen at {} threatened".format(print_tuple(queen)))
+                safe_queen_num -= 1
+            
+
+        return safe_queen_num
     
      # Checks if a solution has been found (if all queens are safe)
     def is_solved(self):
@@ -117,6 +155,10 @@ class Node:
 
     def gen_children(self):
          # TODO Check for all safe positions that children can be placed in
+        for i in range(len(self.queen_positions)):
+            curr_queen = self.queen_positions[i]
+            other_queens = self.queen_positions.copy().pop(i)
+            # TODO Generate children at possible positions
         return
 
 
