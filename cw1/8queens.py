@@ -30,6 +30,7 @@ def main():
     board[QUEEN_Y - 1][QUEEN_X - 1] = BLACK_QUEEN
 
     # Randomly assigns the other 7 queens, marked with white queens
+    starting_positions = []
     unassigned_queens = 7
     while unassigned_queens > 0:
         rand_x = random.randint(0, 7)
@@ -38,8 +39,39 @@ def main():
         curr_pos = board[rand_y][rand_x]
         if curr_pos != BLACK_QUEEN or curr_pos != WHITE_QUEEN:
             board[rand_y][rand_x] = WHITE_QUEEN
+            starting_positions.append((rand_x, rand_y))
             unassigned_queens -= 1
     print_board(board)
+    print(starting_positions)
+
+    print(astar(starting_positions))
+
+def astar(queen_positions):
+    starting_node = Node(None, queen_positions)
+
+    open_list = []
+    closed_list = []
+
+    open_list.append(starting_node)
+
+    while(len(open_list) > 0):
+        curr_node = open_list[0]
+
+         # If the current state has all Queens in safe positions, return it
+        if curr_node.h == 8:
+            return curr_node
+
+        curr_node.gen_children()
+        for child in curr_node.children:
+            new_state = True
+            for closed_node in closed_list:
+                if child == closed_node:
+                    new_state = False
+            for open_node in open_list:
+                if child == open_node and child.g > open_node.g:
+                    new_state = False
+            if new_state:
+                open_list.append(child)
     
 
 def print_board(board):
@@ -47,10 +79,10 @@ def print_board(board):
         print(''.join(row))
 
 class Node:
-    def Node(self, parent, board):
+    def Node(self, parent, queen_positions):
         self.parent = parent
         self.children = []
-        self.board = board
+        self.queen_positions = queen_positions
 
         self.g = self.parent.g + 1
         self.h = self.safe_queens()
