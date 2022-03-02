@@ -78,8 +78,11 @@ def print_board(board):
     for row in board:
         print(''.join(row))
 
+def safe_queen_sort(node):
+    return node.h
+
 class Node:
-    def Node(self, parent, queen_positions):
+    def __init__(self, parent, queen_positions):
         self.parent = parent
         self.children = []
         self.queen_positions = queen_positions
@@ -87,6 +90,22 @@ class Node:
         self.g = self.parent.g + 1
         self.h = self.safe_queens()
         self.f = self.g + self.h
+
+    def __str__(self):
+        return "parent=[{}], fixed queen={}, queens={}".format(self.parent, (QUEEN_X, QUEEN_Y), self.queen_positions)
+
+    def __repr__(self):
+        return self.__str__()+"\n"
+
+    def __eq__(self, other):
+        if len(self.children) == len(other.children):
+            num_matching = 0
+            for node in other.children:
+                if node in self.children:
+                    num_matching += 1
+            if num_matching == len(self.children):
+                return True
+        return False
 
      # The number of queens in safe positions is used as a success heuristic
     def safe_queens():
