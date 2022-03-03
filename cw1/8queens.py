@@ -174,7 +174,7 @@ class Node:
                 if queen[0] == other[0] or queen[1] == other[1]:
                     is_safe = False
                     break
-            for i in range(-7, 7):
+            for i in range(-7, 8):
                  # Checks diagonal directions through the board
                 coord = (queen[0]+i, queen[1]+i)
                 if coord in other_queens:
@@ -199,7 +199,7 @@ class Node:
                 valid_moves.append((n, curr_pos[1]))
             if n != curr_pos[1]:
                 valid_moves.append((curr_pos[0], n))
-        for n in range(-7, 7):
+        for n in range(-7, 8):
              # Calculates y=x diagonal moves
             diagonal_pos = (curr_pos[0]+n, curr_pos[1]+n)
             if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
