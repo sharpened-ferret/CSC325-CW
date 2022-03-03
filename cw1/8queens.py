@@ -49,7 +49,12 @@ def main():
     test_node = Node(None, starting_positions)
     print(test_node.h)
 
-    print(astar(starting_positions))
+    solution_path = astar(starting_positions)
+    print("Safe Position Found...")
+    for node in solution_path:
+        print(node)
+    
+
 
 def astar(queen_positions):
     starting_node = Node(None, queen_positions)
@@ -67,7 +72,12 @@ def astar(queen_positions):
 
          # If the current state has all Queens in safe positions, return it
         if curr_node.h == 8:
-            return curr_node
+            move_path = []
+            curr = curr_node 
+            while curr is not None:
+                move_path.append(curr.queen_positions)
+                curr = curr.parent
+            return move_path[::-1]
 
         curr_node.gen_children()
         for child in curr_node.children:
