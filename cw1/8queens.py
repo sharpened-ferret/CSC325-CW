@@ -143,9 +143,27 @@ class Node:
             if not is_safe:
                 print("Queen at {} threatened".format(print_tuple(queen)))
                 safe_queen_num -= 1
-            
-
         return safe_queen_num
+
+    def get_moves(curr_pos):
+        valid_moves = []
+        for n in range(0, 7):
+            if n != curr_pos[0]:
+                valid_moves.append(n, curr_pos[1])
+            if n != curr_pos[1]:
+                valid_moves.append(curr_pos[0], n)
+        for n in range(-7, 7):
+             # Calculates y=x diagonal moves
+            diagonal_pos = (curr_pos[0]+n, curr_pos[1]+n)
+            if (diagonal_pos[0] in range(0,7) and diagonal_pos[1] in range(0,7)):
+                valid_moves.append(diagonal_pos)
+
+             # Calculates y=-x diagonal moves
+            diagonal_pos = (curr_pos[0]+n, curr_pos[1]-n)
+            if (diagonal_pos[0] in range(0,7) and diagonal_pos[1] in range(0,7)):
+                valid_moves.append(diagonal_pos)
+        return valid_moves
+
     
      # Checks if a solution has been found (if all queens are safe)
     def is_solved(self):
