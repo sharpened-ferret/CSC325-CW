@@ -183,12 +183,21 @@ class Node:
         return False
 
     def gen_children(self):
+        children = []
          # TODO Check for all safe positions that children can be placed in
         for i in range(len(self.queen_positions)):
             curr_queen = self.queen_positions[i]
-            other_queens = self.queen_positions.copy().pop(i)
+            other_queens = self.queen_positions.copy()
+            other_queens.pop(i)
             # TODO Generate children at possible positions
-        return
+            curr_moves = self.get_moves(curr_queen)
+            for move in curr_moves:
+                new_queen_positions = other_queens.copy()
+                new_queen_positions.append(move)
+                children.append(
+                    Node(self, new_queen_positions)
+                )
+        self.children = children
 
 
 
