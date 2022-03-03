@@ -47,7 +47,7 @@ def main():
     print("Starting Positions (0-7 coords):" + str(starting_positions))
     
     test_node = Node(None, starting_positions)
-    print(test_node.safe_queens())
+    print(test_node.h)
 
     # print(astar(starting_positions))
 
@@ -97,9 +97,12 @@ class Node:
         self.children = []
         self.queen_positions = queen_positions
 
-        # self.g = self.parent.g + 1
-        # self.h = self.safe_queens()
-        # self.f = self.g + self.h
+        if parent != None:
+            self.g = self.parent.g + 1
+        else:
+            self.g = 0
+        self.h = self.safe_queens()
+        self.f = self.g + self.h
 
     def __str__(self):
         return "parent=[{}], fixed queen={}, queens={}".format(self.parent, (QUEEN_X, QUEEN_Y), self.queen_positions)
