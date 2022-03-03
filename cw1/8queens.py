@@ -3,11 +3,13 @@
 import random
 from tracemalloc import start
 
+ # Calculates the position for the fixed queen
 K_VAL = 2
 L_VAL = 8
 QUEEN_X = (K_VAL % 8) + 1
 QUEEN_Y = (L_VAL % 8) + 1
 
+ # Stores the position of the fixed queen as a tuple in the 0-7 coordinate space
 FIXED_QUEEN_ARR_POS = (QUEEN_X-1, QUEEN_Y-1)
 
  # Sets the characters for marking white and black queens
@@ -145,8 +147,11 @@ class Node:
                 safe_queen_num -= 1
         return safe_queen_num
 
-    def get_moves(curr_pos):
+    def get_moves(self, curr_pos):
         valid_moves = []
+        blocked_positions = self.queen_positions.copy()
+        blocked_positions.remove(curr_pos)
+        blocked_positions.append(FIXED_QUEEN_ARR_POS)
         for n in range(0, 7):
             if n != curr_pos[0]:
                 valid_moves.append(n, curr_pos[1])
@@ -162,6 +167,9 @@ class Node:
             diagonal_pos = (curr_pos[0]+n, curr_pos[1]-n)
             if (diagonal_pos[0] in range(0,7) and diagonal_pos[1] in range(0,7)):
                 valid_moves.append(diagonal_pos)
+        for pos in blocked_positions:
+            if pos in valid_moves:
+                valid_moves.remove(pos)
         return valid_moves
 
     
