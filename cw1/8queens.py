@@ -1,7 +1,6 @@
 # Neil Woodhouse - 851182
 
 import random
-from tracemalloc import start
 
  # Calculates the position for the fixed queen
 K_VAL = 2
@@ -68,10 +67,11 @@ def astar(queen_positions):
         curr_node = open_list[0]
         open_list.remove(curr_node)
         closed_list.append(curr_node)
-        print(curr_node.queen_positions)
+        print(str(curr_node.queen_positions) + "Num Threatened: " + str(curr_node.h))
+        convert_board(curr_node.queen_positions)
 
          # If the current state has all Queens in safe positions, return it
-        if curr_node.h == 8:
+        if curr_node.h == 0:
             move_path = []
             curr = curr_node 
             while curr is not None:
@@ -88,10 +88,32 @@ def astar(queen_positions):
             for open_node in open_list:
                 if child == open_node and child.g > open_node.g:
                     new_state = False
+            if child.h > curr_node.h: # TODO remove this test later
+                new_state = False 
             if new_state:
                 open_list.append(child)
-        open_list.sort(key=safe_queen_sort)
+        open_list.sort(key=safe_queen_sort, reverse=False)
+        open_list_h = []
+        for item in open_list:
+            open_list_h.append(item.h)
+        print(open_list_h)
     
+def convert_board(path):
+    output_board = [
+        ['▢', '▨', '▢', '▨', '▢', '▨', '▢', '▨'],
+        ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢'],
+        ['▢', '▨', '▢', '▨', '▢', '▨', '▢', '▨'],
+        ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢'],
+        ['▢', '▨', '▢', '▨', '▢', '▨', '▢', '▨'],
+        ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢'],
+        ['▢', '▨', '▢', '▨', '▢', '▨', '▢', '▨'],
+        ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢']
+    ]
+    output_board[FIXED_QUEEN_ARR_POS[1]][FIXED_QUEEN_ARR_POS[0]] = BLACK_QUEEN
+    for pos in path:
+        output_board[pos[1]][pos[0]] = WHITE_QUEEN
+    print_board(output_board)
+
 
 def print_board(board):
     output_board = board.copy()
@@ -115,7 +137,7 @@ class Node:
             self.g = 0
         else:
             self.g = self.parent.g + 1
-        self.h = self.safe_queens()
+        self.h = self.threatened_queen_num()
         self.f = self.g + self.h
 
     def __str__(self):
@@ -135,7 +157,7 @@ class Node:
         return False
 
      # The number of queens in safe positions is used as a success heuristic
-    def safe_queens(self):
+    def threatened_queen_num(self):
         # TODO calculate number of safe queens
         safe_queen_num = 8
         combined_queens = self.queen_positions.copy()
