@@ -49,7 +49,7 @@ def main():
     test_node = Node(None, starting_positions)
     print(test_node.h)
 
-    # print(astar(starting_positions))
+    print(astar(starting_positions))
 
 def astar(queen_positions):
     starting_node = Node(None, queen_positions)
@@ -61,6 +61,9 @@ def astar(queen_positions):
 
     while(len(open_list) > 0):
         curr_node = open_list[0]
+        open_list.remove(curr_node)
+        closed_list.append(curr_node)
+        print(curr_node.queen_positions)
 
          # If the current state has all Queens in safe positions, return it
         if curr_node.h == 8:
@@ -77,6 +80,7 @@ def astar(queen_positions):
                     new_state = False
             if new_state:
                 open_list.append(child)
+        open_list.sort(key=safe_queen_sort)
     
 
 def print_board(board):
@@ -97,15 +101,15 @@ class Node:
         self.children = []
         self.queen_positions = queen_positions
 
-        if parent != None:
-            self.g = self.parent.g + 1
-        else:
+        if parent is None:
             self.g = 0
+        else:
+            self.g = self.parent.g + 1
         self.h = self.safe_queens()
         self.f = self.g + self.h
 
     def __str__(self):
-        return "parent=[{}], fixed queen={}, queens={}".format(self.parent, (QUEEN_X, QUEEN_Y), self.queen_positions)
+        return "parent=[{}], fixed queen={}, queens={}, safe={}".format(self.parent, (QUEEN_X, QUEEN_Y), self.queen_positions, 8-self.h)
 
     def __repr__(self):
         return self.__str__()+"\n"
@@ -146,9 +150,9 @@ class Node:
                     is_safe = False
                     break
             if not is_safe:
-                print("Queen at {} threatened".format(print_tuple(queen)))
+                # print("Queen at {} threatened".format(print_tuple(queen)))
                 safe_queen_num -= 1
-        return safe_queen_num
+        return (8 - safe_queen_num)
 
     def get_moves(self, curr_pos):
         valid_moves = []
@@ -157,9 +161,9 @@ class Node:
         blocked_positions.append(FIXED_QUEEN_ARR_POS)
         for n in range(0, 7):
             if n != curr_pos[0]:
-                valid_moves.append(n, curr_pos[1])
+                valid_moves.append((n, curr_pos[1]))
             if n != curr_pos[1]:
-                valid_moves.append(curr_pos[0], n)
+                valid_moves.append((curr_pos[0], n))
         for n in range(-7, 7):
              # Calculates y=x diagonal moves
             diagonal_pos = (curr_pos[0]+n, curr_pos[1]+n)
@@ -178,7 +182,7 @@ class Node:
     
      # Checks if a solution has been found (if all queens are safe)
     def is_solved(self):
-        if self.h == 8:
+        if self.h == 0:
             return True
         return False
 
