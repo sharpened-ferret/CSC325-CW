@@ -194,7 +194,7 @@ class Node:
         blocked_positions = self.queen_positions.copy()
         blocked_positions.remove(curr_pos)
         blocked_positions.append(FIXED_QUEEN_ARR_POS)
-        for n in range(0, 7):
+        for n in range(0, 8):
             if n != curr_pos[0]:
                 valid_moves.append((n, curr_pos[1]))
             if n != curr_pos[1]:
@@ -202,12 +202,12 @@ class Node:
         for n in range(-7, 7):
              # Calculates y=x diagonal moves
             diagonal_pos = (curr_pos[0]+n, curr_pos[1]+n)
-            if (diagonal_pos[0] in range(0,7) and diagonal_pos[1] in range(0,7)):
+            if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
                 valid_moves.append(diagonal_pos)
 
              # Calculates y=-x diagonal moves
             diagonal_pos = (curr_pos[0]+n, curr_pos[1]-n)
-            if (diagonal_pos[0] in range(0,7) and diagonal_pos[1] in range(0,7)):
+            if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
                 valid_moves.append(diagonal_pos)
         for pos in blocked_positions:
             if pos in valid_moves:
