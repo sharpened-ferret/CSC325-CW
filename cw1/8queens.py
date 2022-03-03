@@ -49,9 +49,12 @@ def main():
     print(test_node.h)
 
     solution_path = astar(starting_positions)
-    print("Safe Position Found...")
-    for node in solution_path:
-        print(node)
+    if (solution_path is not None):
+        print("Safe Position Found...")
+        for node in solution_path:
+            print(node)
+    else:
+        print("No solutions found...")
     
 
 
