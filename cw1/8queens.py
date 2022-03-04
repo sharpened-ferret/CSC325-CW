@@ -34,7 +34,8 @@ EMPTY_BOARD = [
         ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢']
     ]
 
- # 
+ # Used to construct a tree for the pathfinding
+ # Takes a parent node, and a list of queen positions as tuples (in a 0-7 coordinate space)
 class Node:
     def __init__(self, parent, queen_positions):
         self.parent = parent
@@ -61,8 +62,8 @@ class Node:
 
      # The number of queens in safe positions is used as a success heuristic
     def threatened_queen_num(self):
-        # TODO calculate number of safe queens
-        safe_queen_num = 8
+         # Starts by assuming all queens are safe, then checks all queens
+        threatened_queen_num = 0
         for queen in self.queen_positions:
             is_safe = True
             other_queens = copy.deepcopy(self.queen_positions)
@@ -83,9 +84,8 @@ class Node:
                     is_safe = False
                     break
             if not is_safe:
-                # print("Queen at {} threatened".format(print_tuple(queen)))
-                safe_queen_num -= 1
-        return (8 - safe_queen_num)
+                threatened_queen_num += 1
+        return threatened_queen_num
 
     def get_moves(self, curr_pos):
         valid_moves = []
