@@ -45,8 +45,16 @@ def main():
     print_board(board)
     print("Starting Positions (0-7 coords):" + str(starting_positions))
     
-    test_node = Node(None, starting_positions)
-    print(test_node.h)
+    # test_node = Node(None, [(2,1)])
+    # print(test_node.h)
+    # test_node.gen_children()
+    # print(test_node)
+    # convert_board(test_node.queen_positions)
+    # print("-------------")
+    # for child in test_node.children:
+    #     convert_board(child.queen_positions)
+    #     print("\n")
+
 
     solution_path = astar(starting_positions)
     if (solution_path is not None):
@@ -83,6 +91,8 @@ def astar(queen_positions):
             return move_path[::-1]
 
         curr_node.gen_children()
+        placeholder = []
+        improved_nodes = 0
         for child in curr_node.children:
             new_state = True
             for closed_node in closed_list:
@@ -91,15 +101,32 @@ def astar(queen_positions):
             for open_node in open_list:
                 if child == open_node and child.g > open_node.g:
                     new_state = False
-            if child.h > curr_node.h: # TODO remove this test later
+            if child.h >= curr_node.h: # TODO remove this test later
                 new_state = False 
+            if child.h < curr_node.h:
+                improved_nodes += 1
             if new_state:
+                placeholder.append(child)
+        for child in placeholder:
+            if improved_nodes > 0:
+                if child.h < curr_node.h:
+                    open_list.append(child)
+            else:
                 open_list.append(child)
+
+        # if improved_nodes > 0:
+        #     for child in placeholder:
+        #         if child.h < curr_node.h:
+        #             open_list.append(child)
+        # else:
+        #     if len(placeholder) > 0:
+        #         open_list.append(placeholder[0])
         open_list.sort(key=safe_queen_sort, reverse=False)
         open_list_h = []
-        for item in open_list:
-            open_list_h.append(item.h)
-        print(open_list_h)
+        # for item in open_list:
+        #     open_list_h.append(item.h)
+        # print(open_list_h)
+        # print(closed_list)
     
 def convert_board(path):
     output_board = [
@@ -195,20 +222,20 @@ class Node:
         blocked_positions.remove(curr_pos)
         blocked_positions.append(FIXED_QUEEN_ARR_POS)
         for n in range(0, 8):
-            if n != curr_pos[0]:
-                valid_moves.append((n, curr_pos[1]))
+            # if n != curr_pos[0]:
+            #     valid_moves.append((n, curr_pos[1]))
             if n != curr_pos[1]:
                 valid_moves.append((curr_pos[0], n))
-        for n in range(-7, 8):
-             # Calculates y=x diagonal moves
-            diagonal_pos = (curr_pos[0]+n, curr_pos[1]+n)
-            if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
-                valid_moves.append(diagonal_pos)
+        # for n in range(-7, 8):
+        #      # Calculates y=x diagonal moves
+        #     diagonal_pos = (curr_pos[0]+n, curr_pos[1]+n)
+        #     if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
+        #         valid_moves.append(diagonal_pos)
 
-             # Calculates y=-x diagonal moves
-            diagonal_pos = (curr_pos[0]+n, curr_pos[1]-n)
-            if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
-                valid_moves.append(diagonal_pos)
+        #      # Calculates y=-x diagonal moves
+        #     diagonal_pos = (curr_pos[0]+n, curr_pos[1]-n)
+        #     if (diagonal_pos[0] in range(0,8) and diagonal_pos[1] in range(0,8)):
+        #         valid_moves.append(diagonal_pos)
         for pos in blocked_positions:
             if pos in valid_moves:
                 valid_moves.remove(pos)
