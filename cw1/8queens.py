@@ -9,6 +9,7 @@ L_VAL = 8
 QUEEN_X = (K_VAL % 8) + 1
 QUEEN_Y = (L_VAL % 8) + 1
 
+ # Stores the position of the Fixed Queen in the 'queen_positions' array in the Nodes
 QUEEN_ARRAY_POS = QUEEN_X - 1
 
  # Stores the position of the fixed queen as a tuple in the 0-7 coordinate space
@@ -18,10 +19,10 @@ FIXED_QUEEN_ARR_POS = (QUEEN_X-1, QUEEN_Y-1)
 BLACK_QUEEN = '♛'
 WHITE_QUEEN = '♕'
 
- # Stops execution early once all solutions have been found
+ # Stops execution early once all solutions have been found to speed up termination
 TIMEOUT_VAL = 16
 
- # An empty chessboard for use in rendering
+ # An empty chessboard for use in rendering (gets vertically flipped in output)
 EMPTY_BOARD = [
         ['▢', '▨', '▢', '▨', '▢', '▨', '▢', '▨'],
         ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢'],
@@ -33,12 +34,12 @@ EMPTY_BOARD = [
         ['▨', '▢', '▨', '▢', '▨', '▢', '▨', '▢']
     ]
 
+ # 
 class Node:
-    def __init__(self, parent, queen_positions, active_queen):
+    def __init__(self, parent, queen_positions):
         self.parent = parent
         self.children = []
         self.queen_positions = queen_positions
-        self.active_queen = active_queen
 
         if parent is None:
             self.g = 0
@@ -54,13 +55,6 @@ class Node:
         return self.__str__()+"\n"
 
     def __eq__(self, other):
-        # if len(self.children) == len(other.children):
-        #     num_matching = 0
-        #     for node in other.children:
-        #         if node in self.children:
-        #             num_matching += 1
-        #     if num_matching == len(self.children):
-        #         return True
         if self.queen_positions == other.queen_positions:
             return True
         return False
@@ -98,31 +92,24 @@ class Node:
         for n in range(0, 8):
             if n != curr_pos[1]:
                 valid_moves.append((curr_pos[0], n))
-        # print("Valid Moves: {}".format(valid_moves))
         return valid_moves
 
-    def gen_children(self, active_queen):
+    def gen_children(self):
         children = []
         movable_queens = [0,1,3,4,5,6,7]
         for i in movable_queens:
             start_pos = self.queen_positions[i]
             available_moves = self.get_moves(start_pos)
-            # print(i)
 
             for move in available_moves:
-                # print("Current Move: {} for active queen: {}".format(move, active_queen))
                 new_queen_positions = copy.deepcopy(self.queen_positions)
-                # print(new_queen_positions)
                 new_queen_positions[i] = move
-                next_active = random.randint(0, 7)
-                if next_active == QUEEN_ARRAY_POS:
-                    next_active = (next_active + 1) % 8
-                children.append(Node(self, new_queen_positions, next_active))
+                children.append(Node(self, new_queen_positions))
         self.children = children
 
  # Takes an array of tuples representing the positions of the non-fixed queens (in a 0-7 coordinate space)
 def astar(queen_positions):
-    starting_node = Node(None, queen_positions, 0)
+    starting_node = Node(None, queen_positions)
 
     open_list = []
     closed_list = []
@@ -143,7 +130,7 @@ def astar(queen_positions):
                 curr = curr.parent
             return move_path[::-1]
         
-        curr_node.gen_children(curr_node.active_queen)
+        curr_node.gen_children()
         for child in curr_node.children:
             new_state = True
             if child in closed_list:
@@ -155,7 +142,7 @@ def astar(queen_positions):
         open_list.sort(key=threatened_queen_sort, reverse=False)
 
 def astar_multi(queen_positions):
-    starting_node = Node(None, queen_positions, 0)
+    starting_node = Node(None, queen_positions)
     solution_nodes = []
 
     open_list = []
@@ -172,7 +159,7 @@ def astar_multi(queen_positions):
         if curr_node.h == 0:
             solution_nodes.append(curr_node)
         
-        curr_node.gen_children(curr_node.active_queen)
+        curr_node.gen_children()
         for child in curr_node.children:
             new_state = True
             if child in closed_list:
