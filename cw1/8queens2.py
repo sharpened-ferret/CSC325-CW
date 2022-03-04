@@ -68,9 +68,8 @@ class Node:
         safe_queen_num = 8
         for queen in self.queen_positions:
             is_safe = True
-            other_queens = self.queen_positions.copy()
+            other_queens = copy.deepcopy(self.queen_positions)
             other_queens.remove(queen)
-            # print(other_queens)
             for other in other_queens:
                  # Checks if another queen exists in the same row or col
                 if queen[0] == other[0] or queen[1] == other[1]:
@@ -109,7 +108,7 @@ class Node:
 
             for move in available_moves:
                 # print("Current Move: {} for active queen: {}".format(move, active_queen))
-                new_queen_positions = self.queen_positions.copy()
+                new_queen_positions = copy.deepcopy(self.queen_positions)
                 # print(new_queen_positions)
                 new_queen_positions[i] = move
                 next_active = random.randint(0, 7)
