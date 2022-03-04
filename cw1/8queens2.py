@@ -151,6 +151,37 @@ def astar(queen_positions):
                 open_list.append(child)
         open_list.sort(key=threatened_queen_sort, reverse=False)
 
+def astar_multi(queen_positions):
+    starting_node = Node(None, queen_positions, 0)
+    solution_nodes = []
+
+    open_list = []
+    closed_list = []
+    open_list.append(starting_node)
+
+    while len(open_list) > 0:
+        curr_node = open_list[0]
+        open_list.pop(0)
+        closed_list.append(curr_node)
+
+        print("{} {} Num_solutions={}".format(curr_node.queen_positions, curr_node.h, len(solution_nodes)))
+
+        if curr_node.h == 0:
+            solution_nodes.append(curr_node)
+        
+        curr_node.gen_children(curr_node.active_queen)
+        for child in curr_node.children:
+            new_state = True
+            if child in closed_list:
+                new_state = False
+            if child in open_list:
+                new_state = False
+            if new_state:
+                open_list.append(child)
+        open_list.sort(key=threatened_queen_sort, reverse=False)
+
+
+
 def print_tuple(tuple_pos):
     return "({}, {})".format(tuple_pos[0] + 1, tuple_pos[1] + 1)
 
@@ -197,6 +228,14 @@ def main():
             print_board(move)
             print("\n")
 
+    print("Single Solution Complete - Press enter to compute multiple solutions")
+    input("")
+
+    multi_solutions = astar_multi(starting_positions)
+    if multi_solutions is not None:
+        for solution in multi_solutions:
+            print_board(solution.queen_positions)
+            print("\n")
     
 
 if __name__ == "__main__":
