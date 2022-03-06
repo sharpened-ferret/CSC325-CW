@@ -20,6 +20,8 @@ BLACK_QUEEN = '♛'
 WHITE_QUEEN = '♕'
 
  # Stops execution early once all solutions have been found to speed up termination
+ # Number of possible solutions found based on the rotations 
+ # and reflections of the 12 generic solutions that include the fixed queen at position (3,1)
 TIMEOUT_VAL = 16
 
  # An empty chessboard for use in rendering (gets vertically flipped in output)
@@ -107,7 +109,8 @@ class Node:
                 children.append(Node(self, new_queen_positions))
         self.children = children
 
- # Takes an array of tuples representing the positions of the non-fixed queens (in a 0-7 coordinate space)
+ # Takes an array of tuples representing the positions of the queens (in a 0-7 coordinate space)
+ # Returns a path of all moves needed to reach the single solution
 def astar(queen_positions):
     starting_node = Node(None, queen_positions)
 
@@ -141,6 +144,8 @@ def astar(queen_positions):
                 open_list.append(child)
         open_list.sort(key=threatened_queen_sort, reverse=False)
 
+ # Takes an array of tuples representing the positions of the queens (in a 0-7 coordinate space)
+ # Returns a list of the end nodes in each solution found
 def astar_multi(queen_positions):
     starting_node = Node(None, queen_positions)
     solution_nodes = []
@@ -171,14 +176,18 @@ def astar_multi(queen_positions):
         open_list.sort(key=threatened_queen_sort, reverse=False)
     return solution_nodes
 
+# ---Helper functions---
 
-
+ # Takes a tuple in 0-7 coordinate range and returns it in 1-8 (x,y)
 def print_tuple(tuple_pos):
     return "({}, {})".format(tuple_pos[0] + 1, tuple_pos[1] + 1)
 
+ # Sets sorting value for sorting the open nodes list in the Astar functions
 def threatened_queen_sort(node):
     return node.h
 
+ # Takes an array of tuples representing the positions of the queens (in a 0-7 coordinate space)
+ # Renders these positions onto an empty chessboard and prints this output
 def print_board(queen_positions):
     output_board = copy.deepcopy(EMPTY_BOARD)
     for pos in queen_positions:
@@ -188,6 +197,13 @@ def print_board(queen_positions):
     for row in output_board:
         print(''.join(row))
 
+
+ # ---Demonstration Code---
+
+ # Randomly generates queen positions
+ # First runs a single-solution pathfind
+ # Then runs the pathfinding for finding all solutions
+ # Prints these to the console
 def main():
     print("Problem Started, Fixed Queen Position = ({}, {})\n".format(QUEEN_X, QUEEN_Y))
 
