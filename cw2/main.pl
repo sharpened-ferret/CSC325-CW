@@ -1,6 +1,10 @@
 % This section will cover the initial production rules
-np --> det, n.
+np --> det(Pluralisation), n(Pluralisation).
 np --> pro.
+
+det(Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
+
+n(Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
 
 
 % This section will detail the lexicon, as specified in the CW brief. 
