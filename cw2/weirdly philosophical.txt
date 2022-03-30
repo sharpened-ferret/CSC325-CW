@@ -1,1 +1,2 @@
 the man knows the chair
+ [the, man, knows, the, short, apple]
