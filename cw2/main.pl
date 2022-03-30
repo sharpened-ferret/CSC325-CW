@@ -1,15 +1,24 @@
 % This section will cover the initial production rules
-np --> det(Pluralisation), n(Pluralisation).
-np --> pro(Pluralisation, Perspective, Argument).
+
+s --> np(Pluralisation, Perspective), vp(Pluralisation, Perspective).
+
+vp(Pluralisation, Perspective) --> v(Transitive, Pluralisation, Perspective), np(Pluralisation, _).
+
+v(Transitive, Pluralisation, Perspective) --> [Word], {lex(Word, Transitive, Pluralisation, Perspective)}.
+
+np(Pluralisation, 3) --> det(Pluralisation), nbar(Pluralisation).
+np(Pluralisation, Perspective) --> pro(Pluralisation, Perspective, Argument).
 
 det(Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
 
+nbar(Pluralisation) --> n(Pluralisation).
 n(Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
 
 pro(Pluralisation, Perspective, Argument) --> [Word], {lex(Word, pro, Pluralisation, Perspective, Argument)}.
 
 
 % This section will detail the lexicon, as specified in the CW brief. 
+% TODO: Add animacy check!!!!
 
 % Pronouns
 lex(i,pro,singular,1,subject).
