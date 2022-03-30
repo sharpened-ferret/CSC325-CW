@@ -4,7 +4,7 @@
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective).
 
 % Verb Phrase rules
-vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, tv, Pluralisation, Perspective), np(Tree2, Pluralisation2, _, _).
+vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, tv, Pluralisation, Perspective), np(Tree2, Pluralisation2, _, object).
 vp(vp(Tree), Pluralisation, Perspective) --> v(Tree, iv, Pluralisation, Perspective).
 
 % Verb Rules
