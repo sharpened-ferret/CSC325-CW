@@ -18,6 +18,7 @@ det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
 
 % Nbar rules
 nbar(nbar(Tree), Pluralisation) --> n(Tree, Pluralisation).
+nbar(nbar(Tree1, Tree2), Pluralisation) --> jp(Tree1), n(Tree2, Pluralisation).
 
 % Noun rules
 n(n(Word), Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
@@ -26,7 +27,10 @@ n(n(Word), Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
 pro(pro(Word), Pluralisation, Perspective, Argument) --> [Word], {lex(Word, pro, Pluralisation, Perspective, Argument)}.
 
 % Adjective Phrase Rules
+jp(jp(Tree)) --> adj(Tree).
 
+% Adjective rules
+adj(adj(Word)) --> [Word], {lex(Word, adj)}.
 
 
 % This section will detail the lexicon, as specified in the CW brief. 
