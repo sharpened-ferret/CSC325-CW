@@ -1,20 +1,32 @@
 % This section will cover the initial production rules
 
-s --> np(Pluralisation, Perspective), vp(Pluralisation, Perspective).
+% Sentence Rules
+s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective), vp(Tree2, Pluralisation, Perspective).
 
-vp(Pluralisation, Perspective) --> v(Transitive, Pluralisation, Perspective), np(Pluralisation, _).
+% Verb Phrase rules
+vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, Transitive, Pluralisation, Perspective), np(Tree2, Pluralisation, _).
 
-v(Transitive, Pluralisation, Perspective) --> [Word], {lex(Word, Transitive, Pluralisation, Perspective)}.
+% Verb Rules
+v(v(Word), Transitive, Pluralisation, Perspective) --> [Word], {lex(Word, Transitive, Pluralisation, Perspective)}.
 
-np(Pluralisation, 3) --> det(Pluralisation), nbar(Pluralisation).
-np(Pluralisation, Perspective) --> pro(Pluralisation, Perspective, Argument).
+% Noun phrase rules
+np(np(Tree1, Tree2), Pluralisation, 3) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation).
+np(np(Tree), Pluralisation, Perspective) --> pro(Tree, Pluralisation, Perspective, Argument).
 
-det(Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
+% Determiner rules
+det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
 
-nbar(Pluralisation) --> n(Pluralisation).
-n(Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
+% Nbar rules
+nbar(nbar(Tree), Pluralisation) --> n(Tree, Pluralisation).
 
-pro(Pluralisation, Perspective, Argument) --> [Word], {lex(Word, pro, Pluralisation, Perspective, Argument)}.
+% Noun rules
+n(n(Word), Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
+
+% Pronoun rules
+pro(pro(Word), Pluralisation, Perspective, Argument) --> [Word], {lex(Word, pro, Pluralisation, Perspective, Argument)}.
+
+% Adjective Phrase Rules
+
 
 
 % This section will detail the lexicon, as specified in the CW brief. 
