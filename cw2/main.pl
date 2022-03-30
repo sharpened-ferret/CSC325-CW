@@ -20,6 +20,8 @@ det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
 % Nbar rules
 nbar(nbar(Tree), Pluralisation) --> n(Tree, Pluralisation).
 nbar(nbar(Tree1, Tree2), Pluralisation) --> jp(Tree1), n(Tree2, Pluralisation).
+    % Note: I was unclear on how many adjectives should be permitted within a phrase, so here limited it to two per noun.
+nbar(nbar(Tree1, Tree2, Tree3), Pluralisation) --> jp(Tree1), jp(Tree2), n(Tree3, Pluralisation).
 
 % Noun rules
 n(n(Word), Pluralisation) --> [Word], {lex(Word, n, Pluralisation)}.
