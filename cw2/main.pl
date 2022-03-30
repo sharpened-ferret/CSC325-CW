@@ -1,18 +1,18 @@
 % This section will cover the initial production rules
 
 % Sentence Rules
-s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective), vp(Tree2, Pluralisation, Perspective).
+s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective).
 
 % Verb Phrase rules
-vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, tv, Pluralisation, Perspective), np(Tree2, Pluralisation2, _).
+vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, tv, Pluralisation, Perspective), np(Tree2, Pluralisation2, _, _).
 vp(vp(Tree), Pluralisation, Perspective) --> v(Tree, iv, Pluralisation, Perspective).
 
 % Verb Rules
 v(v(Word), Transitive, Pluralisation, Perspective) --> [Word], {lex(Word, Transitive, Pluralisation, Perspective)}.
 
 % Noun phrase rules
-np(np(Tree1, Tree2), Pluralisation, 3) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation).
-np(np(Tree), Pluralisation, Perspective) --> pro(Tree, Pluralisation, Perspective, Argument).
+np(np(Tree1, Tree2), Pluralisation, 3, Argument) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation).
+np(np(Tree), Pluralisation, Perspective, Argument) --> pro(Tree, Pluralisation, Perspective, Argument).
 
 % Determiner rules
 det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
