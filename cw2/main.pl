@@ -1,8 +1,10 @@
 % This section will cover the initial production rules
 
 % Sentence Rules
-s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective).
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective).
+s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective).
+s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective), pp(Tree3).
+s(s(Tree1, Tree2, Tree3, Tree4)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective), pp(Tree4).
 
 % Verb Phrase rules
 vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, tv, Pluralisation, Perspective), np(Tree2, Pluralisation2, _, object).
