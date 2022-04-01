@@ -1,6 +1,7 @@
 % This section will cover the initial production rules
 
 % Sentence Rules
+s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective).
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective).
 
 % Verb Phrase rules
@@ -35,6 +36,10 @@ jp(jp(Tree)) --> adj(Tree).
 % Adjective rules
 adj(adj(Word)) --> [Word], {lex(Word, adj)}.
 
+% Prepositional Phrase rules   TODO decide on pronoun prepositionals
+pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, Pluralisation, 3, Argument). 
+
+prep(prep(Word)) --> [Word], {lex(Word, prep)}.
 
 % This section will detail the lexicon, as specified in the CW brief. 
 % TODO: Add animacy check!!!!
