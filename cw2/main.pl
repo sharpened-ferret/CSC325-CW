@@ -21,9 +21,7 @@ det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
 
 % Nbar rules
 nbar(nbar(Tree), Pluralisation, Animacy) --> n(Tree, Pluralisation, Animacy).
-nbar(nbar(Tree1, Tree2), Pluralisation,_) --> jp(Tree1), n(Tree2, Pluralisation, _).
-    % Note: I was unclear on how many adjectives should be permitted within a phrase, so here limited it to two per noun.
-nbar(nbar(Tree1, Tree2, Tree3), Pluralisation,_) --> jp(Tree1), jp(Tree2), n(Tree3, Pluralisation, _).
+nbar(nbar(Tree), Pluralisation, Animacy) --> jp(Tree, Pluralisation, Animacy).
 
 % Noun rules
 n(n(Word), Pluralisation, Animacy) --> [Word], {lex(Word, n, Pluralisation, Animacy)}.
@@ -32,7 +30,8 @@ n(n(Word), Pluralisation, Animacy) --> [Word], {lex(Word, n, Pluralisation, Anim
 pro(pro(Word), Pluralisation, Perspective, Argument) --> [Word], {lex(Word, pro, Pluralisation, Perspective, Argument)}.
 
 % Adjective Phrase Rules
-jp(jp(Tree)) --> adj(Tree).
+jp(jp(Tree1, Tree2), Pluralisation, Animacy) --> adj(Tree1), n(Tree2, Pluralisation, Animacy).
+jp(jp(Tree1, Tree2), Pluralisation, Animacy) --> adj(Tree1), jp(Tree2, Pluralisation, Animacy).
 
 % Adjective rules
 adj(adj(Word)) --> [Word], {lex(Word, adj)}.
