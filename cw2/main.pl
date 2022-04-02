@@ -2,10 +2,10 @@
 
 % Sentence Rules
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective).
-s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective).
+% s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective).
 %s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), pp(Tree3), vp(Tree4, Pluralisation, Perspective).
-s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective), pp(Tree3).
-s(s(Tree1, Tree2, Tree3, Tree4)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective), pp(Tree4).
+% s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective), pp(Tree3).
+% s(s(Tree1, Tree2, Tree3, Tree4)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective), pp(Tree4).
 
 % Verb Phrase rules
 vp(vp(Tree1, Tree2), Pluralisation, Perspective) --> v(Tree1, tv, Pluralisation, Perspective), np(Tree2, Pluralisation2, _, object).
@@ -15,8 +15,11 @@ vp(vp(Tree), Pluralisation, Perspective) --> v(Tree, iv, Pluralisation, Perspect
 v(v(Word), Transitive, Pluralisation, Perspective) --> [Word], {lex(Word, Transitive, Pluralisation, Perspective)}.
 
 % Noun phrase rules
+np(np(Tree1, Tree2, Tree3), Pluralisation, 3, Argument) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation), pp(Tree3).
 np(np(Tree1, Tree2), Pluralisation, 3, Argument) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation).
+
 np(np(Tree), Pluralisation, Perspective, Argument) --> pro(Tree, Pluralisation, Perspective, Argument).
+np(np(Tree1, Tree2), final, Pluralisation, 3, Argument) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation).
 
 % Determiner rules
 det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
@@ -40,7 +43,8 @@ jp(jp(Tree)) --> adj(Tree).
 adj(adj(Word)) --> [Word], {lex(Word, adj)}.
 
 % Prepositional Phrase rules   TODO decide on pronoun prepositionals
-pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, Pluralisation, 3, Argument). 
+pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, final, Pluralisation, 3, Argument). 
+pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, Pluralisation, 3, Argument), prep(Tree3), np(Tree4, final, _, 3, _).
 
 % Preposition rules
 prep(prep(Word)) --> [Word], {lex(Word, prep)}.
