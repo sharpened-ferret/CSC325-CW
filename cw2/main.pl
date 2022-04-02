@@ -4,26 +4,26 @@
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject, Animacy), vp(Tree2, Pluralisation, Perspective, Animacy).
 
 % Verb Phrase rules
-vp(vp(Tree1, Tree2), Pluralisation, Perspective, Animacy) --> v(Tree1, tv, Pluralisation, Perspective, Animacy), np(Tree2, Pluralisation2, _, object, _).
+vp(vp(Tree1, Tree2), Pluralisation, Perspective, Animacy) --> v(Tree1, tv, Pluralisation, Perspective, Animacy), np(Tree2, _, _, object, _).
 vp(vp(Tree), Pluralisation, Perspective, Animacy) --> v(Tree, iv, Pluralisation, Perspective, Animacy).
 
 % Verb Rules
 v(v(Word), Transitive, Pluralisation, Perspective, Animacy) --> [Word], {lex(Word, Transitive, Pluralisation, Perspective, Animacy)}.
 
 % Noun phrase rules
-np(np(Tree1, Tree2, Tree3), Pluralisation, 3, Argument, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy), pp(Tree3).
-np(np(Tree1, Tree2), Pluralisation, 3, Argument, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy).
-np(np(Tree), Pluralisation, Perspective, Argument, Animacy) --> pro(Tree, Pluralisation, Perspective, Argument).
-np(np(Tree1, Tree2), final, Pluralisation, 3, Argument, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy).
+np(np(Tree1, Tree2, Tree3), Pluralisation, 3, _, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy), pp(Tree3).
+np(np(Tree1, Tree2), Pluralisation, 3, _, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy).
+np(np(Tree), Pluralisation, Perspective, Argument, _) --> pro(Tree, Pluralisation, Perspective, Argument).
+np(np(Tree1, Tree2), final, Pluralisation, 3, _, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy).
 
 % Determiner rules
 det(det(Word), Pluralisation) --> [Word], {lex(Word, det, Pluralisation)}.
 
 % Nbar rules
 nbar(nbar(Tree), Pluralisation, Animacy) --> n(Tree, Pluralisation, Animacy).
-nbar(nbar(Tree1, Tree2), Pluralisation) --> jp(Tree1), n(Tree2, Pluralisation, Animacy).
+nbar(nbar(Tree1, Tree2), Pluralisation) --> jp(Tree1), n(Tree2, Pluralisation, _).
     % Note: I was unclear on how many adjectives should be permitted within a phrase, so here limited it to two per noun.
-nbar(nbar(Tree1, Tree2, Tree3), Pluralisation) --> jp(Tree1), jp(Tree2), n(Tree3, Pluralisation, Animacy).
+nbar(nbar(Tree1, Tree2, Tree3), Pluralisation) --> jp(Tree1), jp(Tree2), n(Tree3, Pluralisation, _).
 
 % Noun rules
 n(n(Word), Pluralisation, Animacy) --> [Word], {lex(Word, n, Pluralisation, Animacy)}.
@@ -38,8 +38,8 @@ jp(jp(Tree)) --> adj(Tree).
 adj(adj(Word)) --> [Word], {lex(Word, adj)}.
 
 % Prepositional Phrase rules   TODO decide on pronoun prepositionals
-pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, Pluralisation, 3, Argument, Animacy). 
-pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, Pluralisation, 3, Argument, Animacy), prep(Tree3), np(Tree4, _, 3, _, Animacy).
+pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, _, 3, _, _). 
+pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, _, 3, _, Animacy), prep(Tree3), np(Tree4, _, 3, _, Animacy).
 
 % Preposition rules
 prep(prep(Word)) --> [Word], {lex(Word, prep)}.
