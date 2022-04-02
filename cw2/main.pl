@@ -220,4 +220,37 @@ s(Tree,[a,man,on,a,chair,sees,a,woman,a,room,in],[]).
 false.
 
 25.
+//TODO ADD RUN without cut-off
+
+26.
+s(Tree,[the,woman,sees,the,apples],[]).
+Tree = s(np(det(the), nbar(n(woman))), vp(v(sees), np(det(the), nbar(n(apples))))) .
+
+27.
+s(Tree,[a,woman,knows,him],[]).
+Tree = s(np(det(a), nbar(n(woman))), vp(v(knows), np(pro(him)))) .
+
+28.
+s(Tree,[the,man,sleeps],[]).
+Tree = s(np(det(the), nbar(n(man))), vp(v(sleeps))) .
+
+29.
+s(Tree,[the,room,sleeps],[]).
+false.
+
+30.
+s(Tree,[the,apple,sees,the,chair],[]).
+false.
+
+31.
+s(Tree,[the,rooms,know,the,man],[]).
+false.
+
+32.
+s(Tree,[the,apple,falls],[]).
+Tree = s(np(det(the), nbar(n(apple))), vp(v(falls))) .
+
+33.
+s(Tree,[the,man,falls],[]).
+Tree = s(np(det(the), nbar(n(man))), vp(v(falls))) .
 **/
