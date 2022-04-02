@@ -43,8 +43,8 @@ jp(jp(Tree)) --> adj(Tree).
 adj(adj(Word)) --> [Word], {lex(Word, adj)}.
 
 % Prepositional Phrase rules   TODO decide on pronoun prepositionals
-pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, final, Pluralisation, 3, Argument). 
-pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, Pluralisation, 3, Argument), prep(Tree3), np(Tree4, final, _, 3, _).
+pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, Pluralisation, 3, Argument). 
+pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, Pluralisation, 3, Argument), prep(Tree3), np(Tree4, _, 3, _).
 
 % Preposition rules
 prep(prep(Word)) --> [Word], {lex(Word, prep)}.
