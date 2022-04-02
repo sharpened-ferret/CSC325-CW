@@ -2,10 +2,6 @@
 
 % Sentence Rules
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject, Animacy), vp(Tree2, Pluralisation, Perspective, Animacy).
-% s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective).
-%s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), pp(Tree3), vp(Tree4, Pluralisation, Perspective).
-% s(s(Tree1, Tree2, Tree3)) --> np(Tree1, Pluralisation, Perspective, subject), vp(Tree2, Pluralisation, Perspective), pp(Tree3).
-% s(s(Tree1, Tree2, Tree3, Tree4)) --> np(Tree1, Pluralisation, Perspective, subject), pp(Tree2), vp(Tree3, Pluralisation, Perspective), pp(Tree4).
 
 % Verb Phrase rules
 vp(vp(Tree1, Tree2), Pluralisation, Perspective, Animacy) --> v(Tree1, tv, Pluralisation, Perspective, Animacy), np(Tree2, Pluralisation2, _, object, _).
@@ -17,7 +13,6 @@ v(v(Word), Transitive, Pluralisation, Perspective, Animacy) --> [Word], {lex(Wor
 % Noun phrase rules
 np(np(Tree1, Tree2, Tree3), Pluralisation, 3, Argument, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy), pp(Tree3).
 np(np(Tree1, Tree2), Pluralisation, 3, Argument, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy).
-
 np(np(Tree), Pluralisation, Perspective, Argument, Animacy) --> pro(Tree, Pluralisation, Perspective, Argument).
 np(np(Tree1, Tree2), final, Pluralisation, 3, Argument, Animacy) --> det(Tree1, Pluralisation), nbar(Tree2, Pluralisation, Animacy).
 
@@ -49,8 +44,11 @@ pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, Plurali
 % Preposition rules
 prep(prep(Word)) --> [Word], {lex(Word, prep)}.
 
+
+
 % This section will detail the lexicon, as specified in the CW brief. 
-% TODO: Add animacy check!!!!
+    % An animacy property has been added to nouns and verbs, with values of 'animate' or 'inanimate'
+    % Otherwise, all properties are as provided in the coursework brief.
 
 % Pronouns
 lex(i,pro,singular,1,subject).
@@ -120,3 +118,8 @@ lex(young,adj).
 lex(red,adj).
 lex(short,adj).
 lex(tall,adj).
+
+
+
+
+% ------ Test Sentences & Outputs ------
