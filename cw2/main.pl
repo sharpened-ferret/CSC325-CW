@@ -1,4 +1,4 @@
-% This section will cover the initial production rules
+% This section details the initial production rules
 
 % Sentence Rules
 s(s(Tree1, Tree2)) --> np(Tree1, Pluralisation, Perspective, subject, Animacy), vp(Tree2, Pluralisation, Perspective, Animacy).
@@ -45,7 +45,7 @@ prep(prep(Word)) --> [Word], {lex(Word, prep)}.
 
 
 
-% This section will detail the lexicon, as specified in the CW brief. 
+% This section details the lexicon, as specified in the CW brief. 
     % An animacy property has been added to nouns and verbs, with values of 'animate' or 'inanimate'
     % Otherwise, all properties are as provided in the coursework brief.
 
