@@ -184,5 +184,40 @@ s(Tree,[you,sleep],[]).
 Tree = s(np(pro(you)), vp(v(sleep))) .
 
 16.
+s(Tree,[she,sleeps],[]).
+Tree = s(np(pro(she)), vp(v(sleeps))).
 
+17.
+s(Tree,[he,sleep],[]).
+false.
+
+18.
+s(Tree,[them,sleep],[]).
+false.
+
+19.
+s(Tree,[a,men,sleep],[]).
+false.
+
+20.
+s(Tree,[the,tall,woman,sees,the,red],[]).
+false.
+
+21.
+s(Tree,[the,young,tall,man,knows,the,old,short,woman],[]).
+Tree = s(np(det(the), nbar(jp(adj(young), jp(adj(tall), n(man))))), vp(v(knows), np(det(the), nbar(jp(adj(old), jp(adj(short), n(woman))))))) .
+
+22.
+s(Tree,[a,man,tall,knows,the,short,woman],[]).
+false.
+
+23.
+s(Tree,[a,man,on,a,chair,sees,a,woman,in,a,room],[]).
+Tree = s(np(det(a), nbar(n(man)), pp(prep(on), np(det(a), nbar(n(chair))))), vp(v(sees), np(det(a), nbar(n(woman)), pp(prep(in), np(det(a), nbar(n(room))))))) .
+
+24.
+s(Tree,[a,man,on,a,chair,sees,a,woman,a,room,in],[]).
+false.
+
+25.
 **/
