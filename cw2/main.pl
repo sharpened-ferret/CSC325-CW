@@ -123,8 +123,42 @@ lex(tall,adj).
 % ------ Test Sentences & Outputs ------
 
 /**
+1.
 s(Tree,[the,woman,sees,the,apples],[]).
 Tree = s(np(det(the), nbar(n(woman))), vp(v(sees), np(det(the), nbar(n(apples))))) .
 
+2.
+s(Tree,[a,woman,knows,him],[]).
+Tree = s(np(det(a), nbar(n(woman))), vp(v(knows), np(pro(him)))) .
+
+3.
+s(Tree,[two,woman,hires,a,man],[]).
+false.
+
+4.
+s(Tree,[two,women,hire,a,man],[]).
+Tree = s(np(det(two), nbar(n(women))), vp(v(hire), np(det(a), nbar(n(man))))) .
+
+5.
+s(Tree,[she,knows,her],[]).
+Tree = s(np(pro(she)), vp(v(knows), np(pro(her)))) .
+
+6.
+s(Tree,[she,know,the,man],[]).
+false.
+
+7.
+s(Tree,[us,see,the,apple],[]).
+false.
+
+8.
+s(Tree,[we,see,the,apple],[]).
+Tree = s(np(pro(we)), vp(v(see), np(det(the), nbar(n(apple))))) .
+
+9.
+s(Tree,[i,know,a,short,man],[]).
+Tree = s(np(pro(i)), vp(v(know), np(det(a), nbar(jp(adj(short), n(man)))))) .
+
+10.
 
 **/
