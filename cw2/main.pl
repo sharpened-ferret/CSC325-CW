@@ -160,5 +160,29 @@ s(Tree,[i,know,a,short,man],[]).
 Tree = s(np(pro(i)), vp(v(know), np(det(a), nbar(jp(adj(short), n(man)))))) .
 
 10.
+s(Tree,[he,hires,they],[]).
+false.
+
+11.
+s(Tree,[two,apples,fall],[]).
+Tree = s(np(det(two), nbar(n(apples))), vp(v(fall))) .
+
+12.
+s(Tree,[the,apple,falls],[]).
+Tree = s(np(det(the), nbar(n(apple))), vp(v(falls))) .
+
+13.
+s(Tree,[the,apples,fall],[]).
+Tree = s(np(det(the), nbar(n(apples))), vp(v(fall))) .
+
+14.
+s(Tree,[i,sleep],[]).
+Tree = s(np(pro(i)), vp(v(sleep))) .
+
+15.
+s(Tree,[you,sleep],[]).
+Tree = s(np(pro(you)), vp(v(sleep))) .
+
+16.
 
 **/
