@@ -36,7 +36,7 @@ jp(jp(Tree1, Tree2), Pluralisation, Animacy) --> adj(Tree1), jp(Tree2, Pluralisa
 % Adjective rules
 adj(adj(Word)) --> [Word], {lex(Word, adj)}.
 
-% Prepositional Phrase rules   TODO decide on pronoun prepositionals
+% Prepositional Phrase rules
 pp(pp(Tree1, Tree2)) --> prep(Tree1), np(Tree2, _, 3, _, _). 
 pp(pp(Tree1, Tree2, pp(Tree3, Tree4))) --> prep(Tree1), np(Tree2, final, _, 3, _, Animacy), prep(Tree3), np(Tree4, _, 3, _, Animacy).
 
